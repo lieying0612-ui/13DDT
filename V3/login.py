@@ -1,5 +1,5 @@
 import tkinter as tk
-
+from database import check_login
 
 def open_login_window(root):
 
@@ -29,11 +29,7 @@ def open_login_window(root):
     )
     password_entry.grid(row=1, column=1, padx=10, pady=10)
 
-
-    # -------------------------
-    # Login result window
-    # -------------------------
-
+    #windows for login results
     def show_result(message):
 
         result_window = tk.Toplevel(login_window)
