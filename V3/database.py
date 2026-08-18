@@ -152,5 +152,25 @@ def get_recommendations(subject_name):
     conn.close()
 
     return [row[0] for row in rows]
-conn.commit()
-conn.close()
+#login page database
+def check_login(username, password):
+
+    conn = sqlite3.connect("subjects.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT id
+    FROM users
+    WHERE username = ?
+    AND password = ?
+    """, (username, password))
+
+    result = cursor.fetchone()
+
+    conn.close()
+
+    if result:
+        return True
+
+    return False
+
