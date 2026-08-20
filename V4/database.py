@@ -229,3 +229,27 @@ def check_login(username, password):
         return True
 
     return False
+#register new user account
+def register_user(username, password):
+
+    conn = sqlite3.connect("subjects.db")
+    cursor = conn.cursor()
+
+    try:
+
+        cursor.execute("""
+        INSERT INTO users (username, password)
+        VALUES (?, ?)
+        """, (username, password))
+
+        conn.commit()
+
+        conn.close()
+
+        return True
+
+    except sqlite3.IntegrityError:
+
+        conn.close()
+
+        return False

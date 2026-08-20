@@ -4,15 +4,18 @@ from tkinter import ttk
 root = tk.Tk()
 
 from database import init_database, get_subjects, get_recommendations
-from login import open_login_window
+from login import open_login_window, open_signup_window
 init_database()
 
 root.title("app")
 root.geometry('800x400')
 #login
+signin_button = tk.Button(root,text="sign in", width=6, command=lambda: open_login_window(root))
+signin_button.place(relx=1.0, x=-110, y=0, anchor="ne")
+#sign up
+signup_button = tk.Button(root,text="sign up",width=6,command=lambda: open_signup_window(root))
+signup_button.place(relx=1.0,x=-20,y=0,anchor="ne")
 
-button = tk.Button(root,text="sign in", width=8, command=lambda: open_login_window(root))
-button.place(relx=1.0, x=-20, y=0, anchor="ne")
 #search bar & search entery
 search_frame = tk.Frame(root)
 search_frame.grid(row=0, column=0, columnspan=5)
