@@ -91,18 +91,20 @@ for b in [button_1, button_2, button_3, button_4, button_5, button_6]:
 
 buttons = [ button_1, button_2, button_3, button_4, button_5, button_6]
 def update_buttons(event=None):
-
     selected_subject = subject.get()
-
     recommendations = get_recommendations(selected_subject)
+    for i in range(6):
+        if i < len(recommendations):
+            buttons[i].config(text=recommendations[i])
+        else:
+            buttons[i].config(text="")
 
-    for button, recommendation in zip(buttons, recommendations):
-        button.config(text=recommendation)
+subject.bind("<<ComboboxSelected>>", update_buttons)
 
 def open_button_window():
     button_window = Toplevel(root)  # Create a new window
-    button_window.title("sign in")
-    button_window.geometry("300x175")  
+    button_window.title("")
+    button_window.geometry("300x210")  
 
     exit_button = tk.Button(button_window, text="conform", width=5, command=button_window.destroy)
     exit_button.grid(row=2, column=1)
