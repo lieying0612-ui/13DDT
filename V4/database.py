@@ -1,5 +1,214 @@
-#database
+# database
 import sqlite3
+
+
+# Data stored in the code
+
+subjects = {
+
+    "subject-A": [
+
+        {
+            "name": "Mathematics",
+            "description": "Mathematics helps develop problem-solving and logical thinking skills."
+        },
+
+        {
+            "name": "Physics",
+            "description": "Physics studies matter, energy and how they interact with each other."
+        },
+
+        {
+            "name": "Engineering",
+            "description": "Engineering uses mathematics and science to solve real-world problems."
+        },
+
+        {
+            "name": "Computer Science",
+            "description": "Computer Science focuses on programming, software and computer systems."
+        },
+
+        {
+            "name": "Statistics",
+            "description": "Statistics involves collecting, analysing and interpreting data."
+        },
+
+        {
+            "name": "Calculus",
+            "description": "Calculus studies change and is commonly used in mathematics, physics and engineering."
+        }
+    ],
+
+
+    "subject-B": [
+
+        {
+            "name": "Recommendation B1",
+            "description": "Description for recommendation B1."
+        },
+
+        {
+            "name": "Recommendation B2",
+            "description": "Description for recommendation B2."
+        },
+
+        {
+            "name": "Recommendation B3",
+            "description": "Description for recommendation B3."
+        },
+
+        {
+            "name": "Recommendation B4",
+            "description": "Description for recommendation B4."
+        },
+
+        {
+            "name": "Recommendation B5",
+            "description": "Description for recommendation B5."
+        },
+
+        {
+            "name": "Recommendation B6",
+            "description": "Description for recommendation B6."
+        }
+    ],
+
+
+    "subject-C": [
+
+        {
+            "name": "Recommendation C1",
+            "description": "Description for recommendation C1."
+        },
+
+        {
+            "name": "Recommendation C2",
+            "description": "Description for recommendation C2."
+        },
+
+        {
+            "name": "Recommendation C3",
+            "description": "Description for recommendation C3."
+        },
+
+        {
+            "name": "Recommendation C4",
+            "description": "Description for recommendation C4."
+        },
+
+        {
+            "name": "Recommendation C5",
+            "description": "Description for recommendation C5."
+        },
+
+        {
+            "name": "Recommendation C6",
+            "description": "Description for recommendation C6."
+        }
+    ],
+
+
+    "subject-D": [
+
+        {
+            "name": "Recommendation D1",
+            "description": "Description for recommendation D1."
+        },
+
+        {
+            "name": "Recommendation D2",
+            "description": "Description for recommendation D2."
+        },
+
+        {
+            "name": "Recommendation D3",
+            "description": "Description for recommendation D3."
+        },
+
+        {
+            "name": "Recommendation D4",
+            "description": "Description for recommendation D4."
+        },
+
+        {
+            "name": "Recommendation D5",
+            "description": "Description for recommendation D5."
+        },
+
+        {
+            "name": "Recommendation D6",
+            "description": "Description for recommendation D6."
+        }
+    ],
+
+
+    "subject-E": [
+
+        {
+            "name": "Recommendation E1",
+            "description": "Description for recommendation E1."
+        },
+
+        {
+            "name": "Recommendation E2",
+            "description": "Description for recommendation E2."
+        },
+
+        {
+            "name": "Recommendation E3",
+            "description": "Description for recommendation E3."
+        },
+
+        {
+            "name": "Recommendation E4",
+            "description": "Description for recommendation E4."
+        },
+
+        {
+            "name": "Recommendation E5",
+            "description": "Description for recommendation E5."
+        },
+
+        {
+            "name": "Recommendation E6",
+            "description": "Description for recommendation E6."
+        }
+    ],
+
+
+    "subject-F": [
+
+        {
+            "name": "Recommendation F1",
+            "description": "Description for recommendation F1."
+        },
+
+        {
+            "name": "Recommendation F2",
+            "description": "Description for recommendation F2."
+        },
+
+        {
+            "name": "Recommendation F3",
+            "description": "Description for recommendation F3."
+        },
+
+        {
+            "name": "Recommendation F4",
+            "description": "Description for recommendation F4."
+        },
+
+        {
+            "name": "Recommendation F5",
+            "description": "Description for recommendation F5."
+        },
+
+        {
+            "name": "Recommendation F6",
+            "description": "Description for recommendation F6."
+        }
+    ]
+}
 
 
 # Initialize Database
@@ -8,8 +217,8 @@ def init_database():
     conn = sqlite3.connect("subjects.db")
     cursor = conn.cursor()
 
-    # create table
 
+    # Users table
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -17,6 +226,8 @@ def init_database():
         password TEXT NOT NULL
     )
     """)
+
+
 
     # Subjects table
     cursor.execute("""
@@ -26,24 +237,52 @@ def init_database():
     )
     """)
 
+
     # Recommendations table
+
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS recommendations (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         subject_id INTEGER,
         button_number INTEGER,
         recommendation TEXT,
+        description TEXT,
         FOREIGN KEY (subject_id) REFERENCES subjects(id)
     )
     """)
 
-    # admin user account(testing use)
+
+    # Check if description column exists
+
+    cursor.execute("""
+    PRAGMA table_info(recommendations)
+    """)
+
+    columns = cursor.fetchall()
+
+    column_names = []
+
+    for column in columns:
+        column_names.append(column[1])
+
+
+    if "description" not in column_names:
+
+        cursor.execute("""
+        ALTER TABLE recommendations
+        ADD COLUMN description TEXT
+        """)
+
+
+
+    # Admin user account
     cursor.execute("""
     SELECT COUNT(*)
     FROM users
     """)
 
     user_count = cursor.fetchone()[0]
+
 
     if user_count == 0:
 
@@ -53,90 +292,93 @@ def init_database():
         """, ("admin", "1234"))
 
 
+    # Check database data
+    database_matches = True
 
-    # Create and add in subjects to the database
 
+    # Get subjects from database
     cursor.execute("""
-    SELECT COUNT(*)
+    SELECT name
     FROM subjects
+    ORDER BY id
     """)
 
-    subject_count = cursor.fetchone()[0]
-
-    if subject_count == 0:
-
-        subjects = {
-
-            "subject-A": [
-
-                {"name": "Mathematics","description": "Mathematics helps develop problem-solving and logical thinking skills."},
-                {"name": "Physics","description": "Physics studies matter, energy and how they interact with each other."},
-                {"name": "Engineering","description": "Engineering uses mathematics and science to solve real-world problems."},
-                {"name": "Computer Science","description": "Computer Science focuses on programming, software and computer systems."},
-                {"name": "Statistics","description": "Statistics involves collecting, analysing and interpreting data."},
-                {"name": "Calculus","description": "Calculus studies change and is commonly used in mathematics, physics and engineering."}
-            ],
+    database_subjects = cursor.fetchall()
 
 
-            "subject-B": [
+    database_subject_names = []
 
-                {"name": "Recommendation B1","description": "Description for recommendation B1."},
-                {"name": "Recommendation B2","description": "Description for recommendation B2."},
-                {"name": "Recommendation B3","description": "Description for recommendation B3."},
-                {"name": "Recommendation B4","description": "Description for recommendation B4."},
-                {"name": "Recommendation B5","description": "Description for recommendation B5."},
-                {"name": "Recommendation B6","description": "Description for recommendation B6."}
-            ],
+    for row in database_subjects:
+        database_subject_names.append(row[0])
 
 
-            "subject-C": [
-
-                {"name": "Recommendation C1","description": "Description for recommendation C1."},
-                {"name": "Recommendation C2","description": "Description for recommendation C2."},
-                {"name": "Recommendation C3","description": "Description for recommendation C3."},
-                {"name": "Recommendation C4","description": "Description for recommendation C4."},
-                {"name": "Recommendation C5","description": "Description for recommendation C5."},
-                {"name": "Recommendation C6","description": "Description for recommendation C6."}
-            ],
+    # Subjects in code
+    code_subject_names = list(subjects.keys())
 
 
-            "subject-D": [
+    # Check subjects
+    if database_subject_names != code_subject_names:
 
-                {"name": "Recommendation D1","description": "Description for recommendation D1."},
-                {"name": "Recommendation D2","description": "Description for recommendation D2."},
-                {"name": "Recommendation D3","description": "Description for recommendation D3."},
-                {"name": "Recommendation D4","description": "Description for recommendation D4."},
-                {"name": "Recommendation D5","description": "Description for recommendation D5."},
-                {"name": "Recommendation D6","description": "Description for recommendation D6."}
-            ],
+        database_matches = False
+
+    # Check recommendations
+
+    if database_matches:
+
+        for subject_name, recommendations in subjects.items():
+
+            cursor.execute("""
+            SELECT recommendations.recommendation,
+                   recommendations.description
+
+            FROM recommendations
+
+            JOIN subjects
+            ON recommendations.subject_id = subjects.id
+
+            WHERE subjects.name = ?
+
+            ORDER BY recommendations.button_number
+            """, (subject_name,))
+
+            database_recommendations = cursor.fetchall()
 
 
-            "subject-E": [
+            code_recommendations = []
 
-                {"name": "Recommendation E1","description": "Description for recommendation E1."},
-                {"name": "Recommendation E2","description": "Description for recommendation E2."},
-                {"name": "Recommendation E3","description": "Description for recommendation E3."},
-                {"name": "Recommendation E4","description": "Description for recommendation E4."},
-                {"name": "Recommendation E5","description": "Description for recommendation E5."},
-                {"name": "Recommendation E6","description": "Description for recommendation E6."}
-            ],
+            for recommendation in recommendations:
+
+                code_recommendations.append(
+                    (
+                        recommendation["name"],
+                        recommendation["description"]
+                    )
+                )
 
 
-            "subject-F": [
+            if database_recommendations != code_recommendations:
 
-                {"name": "Recommendation F1","description": "Description for recommendation F1."},
+                database_matches = False
 
-                {"name": "Recommendation F2","description": "Description for recommendation F2."},
+                break
+    # Refresh database if data does not match
 
-                {"name": "Recommendation F3","description": "Description for recommendation F3."},
+    if not database_matches:
 
-                {"name": "Recommendation F4","description": "Description for recommendation F4."},
+        print("Database does not match the code.")
+        print("Refreshing subjects and recommendations...")
 
-                {"name": "Recommendation F5","description": "Description for recommendation F5."},
 
-                { "name": "Recommendation F6","description": "Description for recommendation F6."}
-            ]
-        }
+        # Delete old recommendations
+        cursor.execute("""
+        DELETE FROM recommendations
+        """)
+
+
+        # Delete old subjects
+        cursor.execute("""
+        DELETE FROM subjects
+        """)
 
 
         # Add subjects and recommendations
@@ -147,10 +389,7 @@ def init_database():
             INSERT INTO subjects (name)
             VALUES (?)
             """, (subject_name,))
-
             subject_id = cursor.lastrowid
-
-
             for number, recommendation in enumerate(
                 recommendations,
                 start=1
@@ -161,21 +400,29 @@ def init_database():
                 (
                     subject_id,
                     button_number,
-                    recommendation
+                    recommendation,
+                    description
                 )
-                VALUES (?, ?, ?)
+                VALUES (?, ?, ?, ?)
                 """, (
                     subject_id,
                     number,
-                    recommendation
+                    recommendation["name"],
+                    recommendation["description"]
                 ))
 
 
-    # Save everything
+        print("Database refreshed.")
 
+
+    else:
+
+        print("Database is already up to date.")
+
+
+    # Save everything
     conn.commit()
     conn.close()
-
 
 
 # Get Subjects
@@ -195,7 +442,6 @@ def get_subjects():
     conn.close()
 
     return [row[0] for row in rows]
-
 
 
 # Get Recommendations
@@ -240,7 +486,8 @@ def get_description(recommendation):
 
     conn.close()
 
-    if result:
+    if result and result[0]:
+
         return result[0]
 
     return "No description available."
@@ -263,10 +510,14 @@ def check_login(username, password):
     conn.close()
 
     if result:
+
         return True
 
     return False
-#register new user account
+
+
+# Register new user account
+
 def register_user(username, password):
 
     conn = sqlite3.connect("subjects.db")

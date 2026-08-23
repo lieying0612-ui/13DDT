@@ -3,7 +3,7 @@ from tkinter import Toplevel
 from tkinter import ttk
 root = tk.Tk()
 
-from database import init_database, get_subjects, get_recommendations
+from database import init_database,get_subjects,get_recommendations,get_description
 from login import open_login_window, open_signup_window
 init_database()
 
@@ -107,17 +107,18 @@ subject.bind("<<ComboboxSelected>>", update_buttons)
 
 def open_button_window(recommendation):
 
+    description = get_description(recommendation)
+
     button_window = Toplevel(root)
 
     button_window.title("Recommendation")
-    button_window.geometry("300x210")
+    button_window.geometry("400x250")
 
-    # Recommendation info
-    label = tk.Label(button_window,text=recommendation,font=("Arial", 12),wraplength=250)
-    label.pack(pady=30)
+    tk.Label(button_window,text=recommendation,font=("Arial", 14, "bold")).pack(pady=20)
 
-    # Confirm button
+    tk.Label(button_window,text=description,wraplength=350,justify="left").pack(pady=10)
+
     exit_button = tk.Button(button_window,text="Confirm",width=8,command=button_window.destroy)
-    exit_button.pack()
+    exit_button.pack(pady=10)
 
 root.mainloop()
