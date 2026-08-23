@@ -47,37 +47,37 @@ subject.pack(anchor="w", pady=5)
 
 #six frames/buttons
 #frame 1
-frame_1 = tk.Frame(root, bg="grey", width=100, height=50, bd=3, relief=tk.RIDGE)
+frame_1 = tk.Frame(root, bg="grey", width=150, height=100, bd=3, relief=tk.RIDGE)
 frame_1.grid(row=3, column=1, padx=(0, 40) )
 frame_1.grid_propagate(False)
 button_1 = tk.Button(frame_1, text="subject", bg="grey", relief=tk.FLAT)
 button_1.place(relx=0, rely=0, relwidth=1, relheight=1)
 #frame2
-frame_2 = tk.Frame(root, bg="grey", width=100, height=50, bd=3, relief=tk.RIDGE)
+frame_2 = tk.Frame(root, bg="grey", width=150, height=100, bd=3, relief=tk.RIDGE)
 frame_2.grid(row=3, column=2, padx=(0, 40) )
 frame_2.grid_propagate(False)
 button_2 = tk.Button(frame_2, text="subject", bg="grey", relief=tk.FLAT)
 button_2.place(relx=0, rely=0, relwidth=1, relheight=1)
 #frame 3
-frame_3 = tk.Frame(root, bg="grey", width=100, height=50, bd=3, relief=tk.RIDGE)
+frame_3 = tk.Frame(root, bg="grey", width=150, height=100, bd=3, relief=tk.RIDGE)
 frame_3.grid(row=3, column=3, padx=(0, 40) )
 frame_3.grid_propagate(False)
 button_3 = tk.Button(frame_3, text="subject", bg="grey", relief=tk.FLAT)
 button_3.place(relx=0, rely=0, relwidth=1, relheight=1)
 #frame 4
-frame_4 = tk.Frame(root, bg="grey", width=100, height=50, bd=3, relief=tk.RIDGE)
+frame_4 = tk.Frame(root, bg="grey", width=150, height=100, bd=3, relief=tk.RIDGE)
 frame_4.grid(row=4, column=1, padx=(0, 40) )
 frame_4.grid_propagate(False)
 button_4 = tk.Button(frame_4, text="subject", bg="grey", relief=tk.FLAT)
 button_4.place(relx=0, rely=0, relwidth=1, relheight=1)
 #frame 5
-frame_5 = tk.Frame(root, bg="grey", width=100, height=50, bd=3, relief=tk.RIDGE)
+frame_5 = tk.Frame(root, bg="grey", width=150, height=100, bd=3, relief=tk.RIDGE)
 frame_5.grid(row=4, column=2, padx=(0, 40) )
 frame_5.grid_propagate(False)
 button_5 = tk.Button(frame_5, text="subject", bg="grey", relief=tk.FLAT)
 button_5.place(relx=0, rely=0, relwidth=1, relheight=1)
 #frame 6
-frame_6 = tk.Frame(root, bg="grey", width=100, height=50, bd=3, relief=tk.RIDGE)
+frame_6 = tk.Frame(root, bg="grey", width=150, height=100, bd=3, relief=tk.RIDGE)
 frame_6.grid(row=4, column=3, padx=(0, 40) )
 frame_6.grid_propagate(False)
 button_6 = tk.Button(frame_6, text="subject", bg="grey", relief=tk.FLAT)

@@ -6,7 +6,7 @@ import sqlite3
 
 subjects = {
 
-    "subject-A": [
+    "Mathematics-college": [
 
         {
             "name": "Mathematics",
