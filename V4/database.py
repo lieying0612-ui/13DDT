@@ -68,57 +68,73 @@ def init_database():
         subjects = {
 
             "subject-A": [
-                "place_holder1",
-                "place_holder2",
-                "place_holder3",
-                "place_holder4",
-                "place_holder5",
-                "place_holder6"
+
+                {"name": "Mathematics","description": "Mathematics helps develop problem-solving and logical thinking skills."},
+                {"name": "Physics","description": "Physics studies matter, energy and how they interact with each other."},
+                {"name": "Engineering","description": "Engineering uses mathematics and science to solve real-world problems."},
+                {"name": "Computer Science","description": "Computer Science focuses on programming, software and computer systems."},
+                {"name": "Statistics","description": "Statistics involves collecting, analysing and interpreting data."},
+                {"name": "Calculus","description": "Calculus studies change and is commonly used in mathematics, physics and engineering."}
             ],
+
 
             "subject-B": [
-                "place_holder1",
-                "place_holder2",
-                "place_holder3",
-                "place_holder4",
-                "place_holder5",
-                "place_holder6"
+
+                {"name": "Recommendation B1","description": "Description for recommendation B1."},
+                {"name": "Recommendation B2","description": "Description for recommendation B2."},
+                {"name": "Recommendation B3","description": "Description for recommendation B3."},
+                {"name": "Recommendation B4","description": "Description for recommendation B4."},
+                {"name": "Recommendation B5","description": "Description for recommendation B5."},
+                {"name": "Recommendation B6","description": "Description for recommendation B6."}
             ],
+
 
             "subject-C": [
-                "place_holder1",
-                "place_holder2",
-                "place_holder3",
-                "place_holder4",
-                "place_holder5",
-                "place_holder6"
+
+                {"name": "Recommendation C1","description": "Description for recommendation C1."},
+                {"name": "Recommendation C2","description": "Description for recommendation C2."},
+                {"name": "Recommendation C3","description": "Description for recommendation C3."},
+                {"name": "Recommendation C4","description": "Description for recommendation C4."},
+                {"name": "Recommendation C5","description": "Description for recommendation C5."},
+                {"name": "Recommendation C6","description": "Description for recommendation C6."}
             ],
+
 
             "subject-D": [
-                "place_holder1",
-                "place_holder2",
-                "place_holder3",
-                "place_holder4",
-                "place_holder5",
-                "place_holder6"
+
+                {"name": "Recommendation D1","description": "Description for recommendation D1."},
+                {"name": "Recommendation D2","description": "Description for recommendation D2."},
+                {"name": "Recommendation D3","description": "Description for recommendation D3."},
+                {"name": "Recommendation D4","description": "Description for recommendation D4."},
+                {"name": "Recommendation D5","description": "Description for recommendation D5."},
+                {"name": "Recommendation D6","description": "Description for recommendation D6."}
             ],
+
 
             "subject-E": [
-                "place_holder1",
-                "place_holder2",
-                "place_holder3",
-                "place_holder4",
-                "place_holder5",
-                "place_holder6"
+
+                {"name": "Recommendation E1","description": "Description for recommendation E1."},
+                {"name": "Recommendation E2","description": "Description for recommendation E2."},
+                {"name": "Recommendation E3","description": "Description for recommendation E3."},
+                {"name": "Recommendation E4","description": "Description for recommendation E4."},
+                {"name": "Recommendation E5","description": "Description for recommendation E5."},
+                {"name": "Recommendation E6","description": "Description for recommendation E6."}
             ],
 
+
             "subject-F": [
-                "place_holder1",
-                "place_holder2",
-                "place_holder3",
-                "place_holder4",
-                "place_holder5",
-                "place_holder6"
+
+                {"name": "Recommendation F1","description": "Description for recommendation F1."},
+
+                {"name": "Recommendation F2","description": "Description for recommendation F2."},
+
+                {"name": "Recommendation F3","description": "Description for recommendation F3."},
+
+                {"name": "Recommendation F4","description": "Description for recommendation F4."},
+
+                {"name": "Recommendation F5","description": "Description for recommendation F5."},
+
+                { "name": "Recommendation F6","description": "Description for recommendation F6."}
             ]
         }
 
@@ -207,6 +223,27 @@ def get_recommendations(subject_name):
 
     return [row[0] for row in rows]
 
+# Get Recommendation Description
+
+def get_description(recommendation):
+
+    conn = sqlite3.connect("subjects.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    SELECT description
+    FROM recommendations
+    WHERE recommendation = ?
+    """, (recommendation,))
+
+    result = cursor.fetchone()
+
+    conn.close()
+
+    if result:
+        return result[0]
+
+    return "No description available."
 
 # Check Login accounts
 def check_login(username, password):

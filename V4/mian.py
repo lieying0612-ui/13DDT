@@ -91,22 +91,33 @@ for b in [button_1, button_2, button_3, button_4, button_5, button_6]:
 
 buttons = [ button_1, button_2, button_3, button_4, button_5, button_6]
 def update_buttons(event=None):
+
     selected_subject = subject.get()
+
     recommendations = get_recommendations(selected_subject)
+
     for i in range(6):
+
         if i < len(recommendations):
-            buttons[i].config(text=recommendations[i])
+            buttons[i].config(text=recommendations[i],command=lambda r=recommendations[i]: open_button_window(r))
         else:
-            buttons[i].config(text="")
+            buttons[i].config(text="",command=lambda: None)
 
 subject.bind("<<ComboboxSelected>>", update_buttons)
 
-def open_button_window():
-    button_window = Toplevel(root)  # Create a new window
-    button_window.title("")
-    button_window.geometry("300x210")  
+def open_button_window(recommendation):
 
-    exit_button = tk.Button(button_window, text="conform", width=5, command=button_window.destroy)
-    exit_button.grid(row=2, column=1)
+    button_window = Toplevel(root)
+
+    button_window.title("Recommendation")
+    button_window.geometry("300x210")
+
+    # Recommendation info
+    label = tk.Label(button_window,text=recommendation,font=("Arial", 12),wraplength=250)
+    label.pack(pady=30)
+
+    # Confirm button
+    exit_button = tk.Button(button_window,text="Confirm",width=8,command=button_window.destroy)
+    exit_button.pack()
 
 root.mainloop()
